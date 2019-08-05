@@ -1,8 +1,7 @@
 /* Resources.js
  * This is simply an image loading utility. It eases the process of loading
- * image files so that they can be used within your game. It also includes
- * a simple "caching" layer so it will reuse cached images if you attempt
- * to load the same image multiple times.
+ * image files . It also includes a simple "caching" layer so it will reuse
+ * cached images if you attempt to load the same image multiple times.
  *
  */
 
@@ -17,9 +16,9 @@
      */
     function load(urlOrArr) {
         if(urlOrArr instanceof Array) {
-            /* If the developer passed in an array of images
-             * loop through each value and call our image
-             * loader on that image file
+            /* If the developer passed in an array of images loop
+             * through each value and call our image loader
+             * on that image file
              */
             urlOrArr.forEach(function(url) {
                 _load(url);
@@ -57,6 +56,9 @@
 
                 /* Once the image is actually loaded and properly cached,
                  * call all of the onReady() callbacks we have defined.
+                 *
+                 * todo for further understanding:
+                 *  call all the callback functions in the readyCallbacks []
                  */
                 if(isReady()) {
                     readyCallbacks.forEach(function(func) { func(); });
@@ -72,8 +74,9 @@
         }
     }
 
+
     /* This is used by developers to grab references to images they know
-     * have been previously loaded. If an image is cached, this functions
+     * have been previously loaded. If an image is cached, this function is
      * the same as calling load() on that URL.
      */
     function get(url) {
@@ -82,6 +85,9 @@
 
     /* This function determines if all of the images that have been requested
      * for loading have in fact been properly loaded.
+     *
+     * If the resourceCache {} is has all properties, and all properties are
+     * not empty, the "ready" is set to be true. Else return false.
      */
     function isReady() {
         var ready = true;

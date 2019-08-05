@@ -1,12 +1,12 @@
-// Enemies our player must avoid
-//todo : make requests to list as todos.
-var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
+// Enemies class
+var Enemy = function(loc,v) {
+    // Variables:
+    //image resource, start location, start velocity
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.loc = loc;
+    this.v = v;
 };
 
 // Update the enemy's position, required method for game
@@ -25,13 +25,31 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+var player = function () {
 
+}
 
+player.prototype.update = function () {
+
+}
+
+player.prototype.render = function () {
+
+}
+
+player.prototype.handleInput = function () {
+
+}
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+var allEnemies = [];
+var enemy1 = new Enemy();
+enemy1.render();
 
+allEnemies.push(enemy1);
 
+var player = new player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
