@@ -1,3 +1,15 @@
+//create a global canvas to fix the "ctx undefined problem
+var doc = window.document,
+    canvas = doc.createElement('canvas'),
+    ctx = canvas.getContext('2d');
+
+    canvas.width = 505;
+    canvas.height = 606;
+    doc.body.appendChild(canvas);
+
+    window.canvas = canvas;
+    window.ctx = ctx;
+
 // Enemies class
 var Enemy = function(loc,v) {
     // Variables:
@@ -7,6 +19,7 @@ var Enemy = function(loc,v) {
     this.sprite = 'images/enemy-bug.png';
     this.loc = loc;
     this.v = v;
+    //this.ctx = ctx;
 };
 
 // Update the enemy's position, required method for game
@@ -19,7 +32,16 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    //todo ctx has not defined problem.
+    let image = Resources.get(this.sprite);
+    if (image){
+        console.log("enemy render resource " + image);
+        console.log("enemy render x " + 50);
+        console.log("enemy render y " + 50);
+        ctx.drawImage(image ,150, 150);
+    }
+
+
 };
 
 // Now write your own player class
