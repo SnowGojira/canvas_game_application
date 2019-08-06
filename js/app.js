@@ -33,13 +33,10 @@ Enemy.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     //todo ctx has not defined problem.
-    let image = Resources.get(this.sprite);
-    if (image){
-        console.log("enemy render resource " + image);
-        console.log("enemy render x " + 50);
-        console.log("enemy render y " + 50);
-        ctx.drawImage(image ,150, 150);
-    }
+    //let image = Resources.get(this.sprite);
+
+    ctx.drawImage(Resources.get(this.sprite), 150, 150);
+    //ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
 
 };
@@ -66,8 +63,8 @@ player.prototype.handleInput = function () {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
+
 var enemy1 = new Enemy();
-enemy1.render();
 
 allEnemies.push(enemy1);
 
