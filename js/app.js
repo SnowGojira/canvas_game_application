@@ -1,7 +1,8 @@
 //move the process of creating canvas here to fix the ctx 'undefined' problem
-var doc = window.document,
-    canvas = doc.createElement('canvas'),
-    ctx = canvas.getContext('2d');
+(function initCanvas(){
+    var doc = window.document,
+        canvas = doc.createElement('canvas'),
+        ctx = canvas.getContext('2d');
 
     canvas.width = 505;
     canvas.height = 606;
@@ -9,6 +10,8 @@ var doc = window.document,
 
     window.canvas = canvas;
     window.ctx = ctx;
+    
+})();
 
 
 // Enemies class
