@@ -10,7 +10,7 @@
 
     window.canvas = canvas;
     window.ctx = ctx;
-    
+
 })();
 
 
@@ -21,6 +21,7 @@ var Enemy = function(x,y,v) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.start = x;
     this.x = x;
     this.y = y;
     this.v = v;
@@ -33,6 +34,8 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x = this.x + this.v;
+
 };
 
 // Draw the enemy on the screen, required method for game
@@ -40,6 +43,8 @@ Enemy.prototype.render = function() {
     //todo ctx has not defined problem.
 
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+
+    this.x > canvas.width? this.x = this.start : this.x = this.x;
 
 
 };
@@ -67,9 +72,16 @@ player.prototype.handleInput = function () {
 // Place the player object in a variable called player
 var allEnemies = [];
 
-var enemy1 = new Enemy(150,150,100);
+var enemy1 = new Enemy(-10,60,2);
+var enemy2 = new Enemy(-100,60,4);
+var enemy3 = new Enemy(-60,145,5);
+var enemy4 = new Enemy(-200,230,2);
 
 allEnemies.push(enemy1);
+allEnemies.push(enemy2);
+allEnemies.push(enemy3);
+allEnemies.push(enemy4);
+
 
 var player = new player();
 
