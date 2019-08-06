@@ -1,4 +1,4 @@
-//create a global canvas to fix the "ctx undefined problem
+//move the process of creating canvas here to fix the ctx 'undefined' problem
 var doc = window.document,
     canvas = doc.createElement('canvas'),
     ctx = canvas.getContext('2d');
@@ -10,20 +10,22 @@ var doc = window.document,
     window.canvas = canvas;
     window.ctx = ctx;
 
+
 // Enemies class
-var Enemy = function(loc,v) {
+var Enemy = function(x,y,v) {
     // Variables:
     //image resource, start location, start velocity
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.loc = loc;
+    this.x = x;
+    this.y = y;
     this.v = v;
-    //this.ctx = ctx;
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
+//dt is used in engine.js, here it has no use.
 Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
@@ -33,10 +35,8 @@ Enemy.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     //todo ctx has not defined problem.
-    //let image = Resources.get(this.sprite);
 
-    ctx.drawImage(Resources.get(this.sprite), 150, 150);
-    //ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
 
 };
@@ -64,7 +64,7 @@ player.prototype.handleInput = function () {
 // Place the player object in a variable called player
 var allEnemies = [];
 
-var enemy1 = new Enemy();
+var enemy1 = new Enemy(150,150,100);
 
 allEnemies.push(enemy1);
 
