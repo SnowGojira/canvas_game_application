@@ -40,8 +40,7 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
-    //todo ctx has not defined problem.
-
+    //console.log("enemy character: "+ Resources.get(this.sprite));
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
     this.x > canvas.width? this.x = this.start : this.x = this.x;
@@ -52,21 +51,27 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var player = function () {
+var player = function (x,y) {
+    this.character = 'images/char-horn-girl.png';
+    this.startX = 205;
+    this.startY = 380;
 
 }
 
 player.prototype.update = function () {
 
-}
+};
 
 player.prototype.render = function () {
+    //todo ctx has not defined problem. Resources is undefined
+    //console.log("player character: "+ Resources.get(this.character));
+    ctx.drawImage(Resources.get(this.character), this.startX, this.startY);
 
-}
+};
 
 player.prototype.handleInput = function () {
 
-}
+};
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -79,6 +84,7 @@ var enemy4 = new Enemy(-200,230,2);
 var allEnemies = [enemy1,enemy2,enemy3,enemy4];
 
 var player = new player();
+
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
