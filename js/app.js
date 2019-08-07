@@ -53,21 +53,21 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 var player = function () {
     this.character = 'images/char-horn-girl.png';
-    this.startX = 205;
-    this.startY = 380;
+    this.startX = 202;
+    this.startY = 405;
     this.x = this.startX;
     this.y = this.startY;
     this.stepX = 0;
     this.stepY = 0;
-    this.orient = 1;
+    this.orient = 0;
 }
 
 player.prototype.update = function () {
 
     //move
     //this.handleInput();
-    if(this.stepX || this.stepY){
-        console.log("this.step "+this.stepX +",this.stepY "+this.stepY);
+    if(this.orient != 0){
+
         this.x = this.x + this.stepX*this.orient;
         this.y = this.y + this.stepY*this.orient;
 
@@ -75,40 +75,39 @@ player.prototype.update = function () {
         this.stepY = 0;
     }
 
-    //collision
-
 };
 
 player.prototype.render = function () {
     //todo ctx has not defined problem. Resources is undefined
     //console.log("player character: "+ Resources.get(this.character));
+
     ctx.drawImage(Resources.get(this.character), this.x, this.y);
 
 };
 
 player.prototype.handleInput = function (e) {
-    //console.log(e)
-    this.moved = true;
+
+    console.log("this.stepX "+this.x +",this.stepY "+this.y);
     switch (e) {
         case 'left' :
-            //this.x >= 55.5? this.x - 55.5 : this.x;
+            this.x >= 101? this.stepX = 101 : this.stepX = 0;
             //console.log(this.x >= 55.5? this.x - 55.5 : this.x);
-            this.stepX = 101;
+            //this.stepX = 101;
             this.orient = -1;
             break;
         case 'right' :
-            //this.x <= 459.5? this.x + 55.5 : this.x;
-            this.stepX = 101;
+            this.x <= 303? this.stepX = 101 : this.stepX =0;
+            //this.stepX = 101;
             this.orient = 1;
             break;
         case 'up' :
-            //this.y >= 41.5? this.y - 41.5 : this.startY;
-            this.stepY = 83;
+            this.y >= 73? this.stepY = 83 : this.stepY = 0;
+            //this.stepY = 83;
             this.orient = -1;
             break;
         case 'down' :
-            //this.y <= this.startY? this.y + 41.5: this.y;
-            this.stepY = 83;
+            this.y <= 322? this.stepY = 83: this.stepY = 0;
+            //this.stepY = 83;
             this.orient = 1;
             break;
     }
