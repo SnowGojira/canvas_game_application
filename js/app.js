@@ -51,26 +51,67 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var player = function (x,y) {
+var player = function () {
     this.character = 'images/char-horn-girl.png';
     this.startX = 205;
     this.startY = 380;
-
+    this.x = this.startX;
+    this.y = this.startY;
+    this.stepX = 0;
+    this.stepY = 0;
+    this.orient = 1;
 }
 
 player.prototype.update = function () {
+
+    //move
+    //this.handleInput();
+    if(this.stepX || this.stepY){
+        console.log("this.step "+this.stepX +",this.stepY "+this.stepY);
+        this.x = this.x + this.stepX*this.orient;
+        this.y = this.y + this.stepY*this.orient;
+
+        this.stepX = 0;
+        this.stepY = 0;
+    }
+
+    //collision
 
 };
 
 player.prototype.render = function () {
     //todo ctx has not defined problem. Resources is undefined
     //console.log("player character: "+ Resources.get(this.character));
-    ctx.drawImage(Resources.get(this.character), this.startX, this.startY);
+    ctx.drawImage(Resources.get(this.character), this.x, this.y);
 
 };
 
-player.prototype.handleInput = function () {
-
+player.prototype.handleInput = function (e) {
+    //console.log(e)
+    this.moved = true;
+    switch (e) {
+        case 'left' :
+            //this.x >= 55.5? this.x - 55.5 : this.x;
+            //console.log(this.x >= 55.5? this.x - 55.5 : this.x);
+            this.stepX = 101;
+            this.orient = -1;
+            break;
+        case 'right' :
+            //this.x <= 459.5? this.x + 55.5 : this.x;
+            this.stepX = 101;
+            this.orient = 1;
+            break;
+        case 'up' :
+            //this.y >= 41.5? this.y - 41.5 : this.startY;
+            this.stepY = 83;
+            this.orient = -1;
+            break;
+        case 'down' :
+            //this.y <= this.startY? this.y + 41.5: this.y;
+            this.stepY = 83;
+            this.orient = 1;
+            break;
+    }
 };
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
