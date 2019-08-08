@@ -61,6 +61,8 @@ var Player = function () {
     this.stepX = 0;
     this.stepY = 0;
     this.orient = 0;
+
+    this.count = 0;
 };
 
 Player.prototype.update = function () {
@@ -79,11 +81,12 @@ Player.prototype.update = function () {
 };
 
 Player.prototype.render = function () {
-    //todo ctx has not defined problem. Resources is undefined
     //console.log("player character: "+ Resources.get(this.character));
 
     ctx.drawImage(Resources.get(this.character), this.x, this.y);
 
+    //render the counter
+    drawCount(this.count);
 };
 
 Player.prototype.handleInput = function (e) {
@@ -113,6 +116,7 @@ Player.prototype.handleInput = function (e) {
     }
 };
 
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -126,6 +130,7 @@ var allEnemies = [enemy1,enemy2,enemy3,enemy4];
 //var allEnemies = [enemy1];
 
 var player = new Player();
+
 
 
 // This listens for key presses and sends the keys to your
@@ -157,7 +162,9 @@ var checkCollisions = function (){
                 //player.y <= enemy.x +30
               ){
                 console.log("collisions!");
+
                 counter = 0;
+
                 player = new Player();
             }
 
@@ -166,9 +173,21 @@ var checkCollisions = function (){
 
     //reach the goal
     if(player.y == -10){
-        player = new Player();
-        count += 1000;
+        //player = new Player();
+        player.x = 202;
+        player.y = 405;
+        player.count += 1000;
+
     }
 
 };
 
+//todo draw Text cannot be displayed. Because of in background.
+function drawCount(str) {
+    ctx.fillStyle = "#000";
+    ctx.font = "bold 20px Arial";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "bottom";
+    ctx.fillText(str,10,45);
+}
+//drawCount("start");
