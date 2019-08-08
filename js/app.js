@@ -51,7 +51,7 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var player = function () {
+var Player = function () {
     this.character = 'images/char-horn-girl.png';
     this.startX = 202;
     this.startY = 405;
@@ -60,9 +60,9 @@ var player = function () {
     this.stepX = 0;
     this.stepY = 0;
     this.orient = 0;
-}
+};
 
-player.prototype.update = function () {
+Player.prototype.update = function () {
 
     //move
     //this.handleInput();
@@ -77,7 +77,7 @@ player.prototype.update = function () {
 
 };
 
-player.prototype.render = function () {
+Player.prototype.render = function () {
     //todo ctx has not defined problem. Resources is undefined
     //console.log("player character: "+ Resources.get(this.character));
 
@@ -85,9 +85,8 @@ player.prototype.render = function () {
 
 };
 
-player.prototype.handleInput = function (e) {
+Player.prototype.handleInput = function (e) {
 
-    console.log("this.stepX "+this.x +",this.stepY "+this.y);
     switch (e) {
         case 'left' :
             this.x >= 101? this.stepX = 101 : this.stepX = 0;
@@ -116,14 +115,15 @@ player.prototype.handleInput = function (e) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var enemy1 = new Enemy(-10,60,2);
-var enemy2 = new Enemy(-100,60,4);
+var enemy1 = new Enemy(-10,62,2);
+var enemy2 = new Enemy(-100,62,4);
 var enemy3 = new Enemy(-60,145,5);
-var enemy4 = new Enemy(-200,230,2);
+var enemy4 = new Enemy(-200,228,2);
 
 var allEnemies = [enemy1,enemy2,enemy3,enemy4];
+//var allEnemies = [enemy1];
 
-var player = new player();
+var player = new Player();
 
 
 // This listens for key presses and sends the keys to your
@@ -138,3 +138,32 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+//collisions event logic
+var checkCollisions = function (){
+
+    //collisions
+    if(player.y == 239 ||
+        player.y == 156 ||
+        player.y == 73){
+
+        allEnemies.forEach(function(enemy){
+            if(player.x >= enemy.x-5 &&
+                player.x <= enemy.x +5 &&
+                player.y == enemy.y + 11
+                //player.y <= enemy.x +30
+              ){
+                console.log("collisions!");
+
+                player = new Player();
+            }
+
+        });
+    }
+
+    //reach the goal
+    if(player.y == -10){
+        player = new Player();
+    }
+
+};
