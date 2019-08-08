@@ -63,6 +63,7 @@ var Player = function () {
     this.orient = 0;
 
     this.count = 0;
+    this.heart = 3;
 };
 
 Player.prototype.update = function () {
@@ -116,6 +117,11 @@ Player.prototype.handleInput = function (e) {
     }
 };
 
+Player.prototype.reset = function () {
+    this.x = this.startX;
+    this.y = this.startY;
+};
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -161,11 +167,14 @@ var checkCollisions = function (){
                 player.y == enemy.y + 11
                 //player.y <= enemy.x +30
               ){
-                console.log("collisions!");
-
-                counter = 0;
-
-                player = new Player();
+                console.log("collisions!" + player.heart);
+                if(player.heart > 1){
+                    player.count>0? player.count-= 400 : player.count=0;
+                    player.heart -= 1;
+                    player.reset();
+                }else {
+                    player = new Player();
+                }
             }
 
         });
@@ -174,9 +183,8 @@ var checkCollisions = function (){
     //reach the goal
     if(player.y == -10){
         //player = new Player();
-        player.x = 202;
-        player.y = 405;
         player.count += 1000;
+        player.reset();
 
     }
 
