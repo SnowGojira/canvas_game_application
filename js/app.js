@@ -53,7 +53,8 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function () {
-    this.character = 'images/char-horn-girl.png';
+    this.characterSprite = 'images/char-horn-girl.png';
+    this.heartSprite = 'images/Heart.png';
     this.startX = 202;
     this.startY = 405;
     this.x = this.startX;
@@ -82,10 +83,14 @@ Player.prototype.update = function () {
 };
 
 Player.prototype.render = function () {
-    //console.log("player character: "+ Resources.get(this.character));
+    //draw the character
+    ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
 
-    ctx.drawImage(Resources.get(this.character), this.x, this.y);
-
+    //draw the heart symbol for life
+    for(let i = this.heart; i>=1 ; i--){
+        ctx.drawImage(Resources.get(this.heartSprite), 500-i*35, 5,32,50);
+    }
+    
     //render the counter
     drawCount(this.count);
 };
