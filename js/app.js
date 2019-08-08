@@ -14,6 +14,7 @@
 })();
 
 
+
 // Enemies class
 var Enemy = function(x,y,v) {
     // Variables:
@@ -111,6 +112,7 @@ Player.prototype.handleInput = function (e) {
             break;
     }
 };
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -140,6 +142,7 @@ document.addEventListener('keyup', function(e) {
 });
 
 //collisions event logic
+var count = 0;
 var checkCollisions = function (){
 
     //collisions
@@ -154,7 +157,7 @@ var checkCollisions = function (){
                 //player.y <= enemy.x +30
               ){
                 console.log("collisions!");
-
+                counter = 0;
                 player = new Player();
             }
 
@@ -164,6 +167,8 @@ var checkCollisions = function (){
     //reach the goal
     if(player.y == -10){
         player = new Player();
+        count += 1000;
     }
 
 };
+
