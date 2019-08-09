@@ -15,12 +15,13 @@
 
 /////////////////////////////////////////Class/////////////////////////////////////
 //Enemy
-var Enemy = function(x,y,v) {
+var Enemy = function() {
     this.sprite = 'images/enemy-bug.png';
-    this.start = x;
-    this.x = x;
-    this.y = y;
-    this.v = v;
+    this.x = -1000+Math.round(Math.random() * 10)*100;
+    this.start = this.x;
+    let locY = [62,145,228];
+    this.y = locY[Math.round(Math.random() * 2)];
+    this.v = 1+Math.round(Math.random() * 4);
 };
 
 Enemy.prototype.update = function(dt) {
@@ -109,36 +110,22 @@ Player.prototype.reset = function () {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-
 var level = 3;
-
 var allEnemies = randomEnemies(level);
 var player = new Player();
 
 
+
 ////////////////////////////////////////function to reference/////////////////////////////
 //random generator
-function randomEnemies(num) {
-    let enemyArr = [];
-    for(i=0;i<num;i++){
-        enemyArr.push(randomEnemy());
+function randomEnemies(level) {
+    let arr = [];
+    for(i=0;i<level;i++){
+        arr.push(new Enemy());
     }
-    return enemyArr;
-}
-function randomEnemy(){
-    let randomx,randomy,randomv;
-    //start X
-    let Rand = Math.random();
-    randomx = -1000+Math.round(Rand * 10)*100;
-    //start Y
-    let locY = [62,145,228];
-    randomy = locY[Math.round(Rand * 2)];
-    //start v
-    randomv = 1+Math.round(Rand * 4);
+    console.log(arr);
 
-    let enemy = new Enemy(randomx,randomy,randomv);
-    console.log(enemy);
-    return enemy;
+    return arr;
 }
 
 
@@ -167,7 +154,6 @@ var checkCollisions = function (){
             if(player.x >= enemy.x-5 &&
                 player.x <= enemy.x +5 &&
                 player.y == enemy.y + 11
-                //player.y <= enemy.x +30
               ){
                 console.log("collisions!" + player.heart);
                 if(player.heart > 1){
@@ -176,8 +162,9 @@ var checkCollisions = function (){
                     player.reset();
                 }else {
                     player = new Player();
+                    
                     level = 3;
-                    //allEnemies = randomEnemies(level);
+                    allEnemies = randomEnemies(level);
                 }
             }
 
@@ -189,9 +176,10 @@ var checkCollisions = function (){
         //player = new Player();
         player.count += 1000;
         player.reset();
+        //level up, enemies become more
         level += 1;
-        //allEnemies = randomEnemies(level);
-
+        allEnemies = randomEnemies(level);
+        //console.log("goal: "+allEnemies);
     }
 
 };
