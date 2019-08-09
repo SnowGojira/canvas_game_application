@@ -34,7 +34,34 @@ Enemy.prototype.render = function() {
 };
 
 //Gem
-var Gem = function(){};
+var Gem = function(){
+    var blueGem = {
+        sprite : 'images/Gem-Blue.png',
+        score : 100
+    };
+
+    var greenGem = {
+        sprite : 'images/Gem-Green.png',
+        score : 200
+    };
+
+    var orangeGem = {
+        sprite : 'images/Gem-Orange.png',
+        score : 300
+    };
+
+    let gemArr = [blueGem,greenGem,orangeGem];
+    this.gem = gemArr[Math.round(Math.random() * 2)];
+    let locY = [97,180,263];
+    this.y = locY[Math.round(Math.random() * 2)];
+    let locX = [9,110,211,312,413];
+    this.x = locX[Math.round(Math.random() * 4)];
+};
+
+Gem.prototype.render = function () {
+    console.log(this.x+" "+this.y+" "+this.gem.sprite);
+    ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
+};
 
 // Player
 var Player = function () {
@@ -111,23 +138,23 @@ Player.prototype.reset = function () {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var level = 3;
-var allEnemies = randomEnemies(level);
+var allEnemies = enemyEntries(3);
 var player = new Player();
+
+var allGems = [new Gem(413)];
 
 
 
 ////////////////////////////////////////function to reference/////////////////////////////
 //random generator
-function randomEnemies(level) {
+function enemyEntries(level) {
     let arr = [];
     for(i=0;i<level;i++){
         arr.push(new Enemy());
     }
     console.log(arr);
-
     return arr;
 }
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -162,9 +189,9 @@ var checkCollisions = function (){
                     player.reset();
                 }else {
                     player = new Player();
-                    
+
                     level = 3;
-                    allEnemies = randomEnemies(level);
+                    allEnemies = enemyEntries(level);
                 }
             }
 
@@ -178,7 +205,7 @@ var checkCollisions = function (){
         player.reset();
         //level up, enemies become more
         level += 1;
-        allEnemies = randomEnemies(level);
+        allEnemies = enemyEntries(level);
         //console.log("goal: "+allEnemies);
     }
 
