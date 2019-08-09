@@ -59,8 +59,12 @@ var Gem = function(){
 };
 
 Gem.prototype.render = function () {
-    console.log(this.x+" "+this.y+" "+this.gem.sprite);
+
     ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
+};
+
+Gem.prototype.update = function () {
+
 };
 
 // Player
