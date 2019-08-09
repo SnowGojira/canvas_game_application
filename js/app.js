@@ -110,29 +110,37 @@ Player.prototype.reset = function () {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var enemy1 = new Enemy(-10,62,2);
-var enemy2 = new Enemy(-100,62,4);
-var enemy3 = new Enemy(-60,145,5);
-var enemy4 = new Enemy(-200,228,2);
+var level = 3;
 
-var allEnemies = [enemy1,enemy2,enemy3,enemy4];
-
+var allEnemies = randomEnemies(level);
 var player = new Player();
 
 
 ////////////////////////////////////////function to reference/////////////////////////////
 //random generator
-function RamdomEnemy(num){
+function randomEnemies(num) {
     let enemyArr = [];
-    let enemy;
-    let randomx,randomy,randomv;
-    //start X
-
-    let Rand = Math.random();
-    randomx = -1000 + Math.round((Rand * 10))/100;
-    console.log("随机数："+randomx);
+    for(i=0;i<num;i++){
+        enemyArr.push(randomEnemy());
+    }
     return enemyArr;
 }
+function randomEnemy(){
+    let randomx,randomy,randomv;
+    //start X
+    let Rand = Math.random();
+    randomx = -1000+Math.round(Rand * 10)*100;
+    //start Y
+    let locY = [62,145,228];
+    randomy = locY[Math.round(Rand * 2)];
+    //start v
+    randomv = 1+Math.round(Rand * 4);
+
+    let enemy = new Enemy(randomx,randomy,randomv);
+    console.log(enemy);
+    return enemy;
+}
+
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -168,6 +176,8 @@ var checkCollisions = function (){
                     player.reset();
                 }else {
                     player = new Player();
+                    level = 3;
+                    //allEnemies = randomEnemies(level);
                 }
             }
 
@@ -179,6 +189,8 @@ var checkCollisions = function (){
         //player = new Player();
         player.count += 1000;
         player.reset();
+        level += 1;
+        //allEnemies = randomEnemies(level);
 
     }
 
