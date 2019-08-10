@@ -58,14 +58,19 @@ var Gem = function(){
     this.x = locX[Math.round(Math.random() * 4)];
 };
 
-Gem.prototype.render = function () {
-
+Gem.prototype.show = function () {
     ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
+    console.log("gem: "+this.gem.sprite+" "+this.x+" "+this.y);
+    /*setTimeout(function () {
+        ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
+        console.log("gem: "+this.gem.sprite+" "+this.x+" "+this.y);
+    }.bind(this),1000);*/
 };
 
-Gem.prototype.update = function () {
+Gem.prototype.dismiss = function () {
 
 };
+
 
 // Player
 var Player = function () {
@@ -144,9 +149,7 @@ Player.prototype.reset = function () {
 var level = 3;
 var allEnemies = enemyEntries(3);
 var player = new Player();
-
-var allGems = [new Gem(413)];
-
+var gem = new Gem();
 
 
 ////////////////////////////////////////function to reference/////////////////////////////

@@ -41,7 +41,6 @@ var Engine = (function(global) {
          */
         update(dt);
         render();
-
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -61,6 +60,7 @@ var Engine = (function(global) {
         reset();
         lastTime = Date.now();
         main();
+        
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -151,12 +151,6 @@ var Engine = (function(global) {
         });
 
         player.render();
-
-        //gem
-
-        allGems.forEach(function(gem) {
-            gem.render();
-        });
 
     }
 
