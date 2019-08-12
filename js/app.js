@@ -26,7 +26,7 @@ var Enemy = function() {
 
 Enemy.prototype.update = function(dt) {
     //move with a velocity
-    this.x > canvas.width? this.x = this.start : this.x = this.x + this.v;
+    this.x > canvas.width? this.x = this.start : this.x = this.x + this.v/(50*dt);
 };
 
 Enemy.prototype.render = function() {
@@ -59,17 +59,12 @@ var Gem = function(){
 };
 
 Gem.prototype.show = function () {
+    //let image = Resources.get(this.gem.sprite);
+    //ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
     ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
-    console.log("gem: "+this.gem.sprite+" "+this.x+" "+this.y);
-    /*setTimeout(function () {
-        ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
-        console.log("gem: "+this.gem.sprite+" "+this.x+" "+this.y);
-    }.bind(this),1000);*/
-};
-
-Gem.prototype.dismiss = function () {
 
 };
+
 
 
 // Player
@@ -149,7 +144,14 @@ Player.prototype.reset = function () {
 var level = 3;
 var allEnemies = enemyEntries(3);
 var player = new Player();
-var gem = new Gem();
+
+var allGems = [];
+
+setInterval(function (){
+    var gem = new Gem();
+    allGems.push(gem);
+},1000);
+
 
 
 ////////////////////////////////////////function to reference/////////////////////////////

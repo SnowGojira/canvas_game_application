@@ -41,6 +41,7 @@ var Engine = (function(global) {
          */
         update(dt);
         render();
+        updateGems();
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -76,6 +77,7 @@ var Engine = (function(global) {
         checkCollisions();
     }
 
+
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
@@ -88,8 +90,18 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+    }
 
-        //gem
+
+    function updateGems() {
+        if(allGems.length == 1 ){
+            allGems.forEach(function(gem){
+                console.log("gem: "+gem);
+                gem.show();
+            })
+        }else{
+            allGems = [];
+        }
     }
 
     /* This function initially draws the "game level", it will then call
