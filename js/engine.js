@@ -96,9 +96,8 @@ var Engine = (function(global) {
     function updateGems() {
         if(allGems.length == 1 ){
             allGems.forEach(function(gem){
-                console.log("gem: "+gem);
                 gem.show();
-            })
+            });
         }else{
             allGems = [];
         }

@@ -55,6 +55,7 @@ var Gem = function(){
     let locY = [97,180,263];
     this.y = locY[Math.round(Math.random() * 2)];
     let locX = [9,110,211,312,413];
+    //let locX = [0,101,202,303,404];
     this.x = locX[Math.round(Math.random() * 4)];
 };
 
@@ -145,12 +146,13 @@ var level = 3;
 var allEnemies = enemyEntries(3);
 var player = new Player();
 
+//gems init
 var allGems = [];
 
 setInterval(function (){
     var gem = new Gem();
     allGems.push(gem);
-},1000);
+},2000);
 
 
 
@@ -185,13 +187,13 @@ var checkCollisions = function (){
     if(player.y == 239 ||
         player.y == 156 ||
         player.y == 73){
-
+        //collision zone
         allEnemies.forEach(function(enemy){
             if(player.x >= enemy.x-5 &&
                 player.x <= enemy.x +5 &&
                 player.y == enemy.y + 11
               ){
-                console.log("collisions!" + player.heart);
+                //enemy and heart combine logic
                 if(player.heart > 1){
                     player.count>0? player.count-= 400 : player.count=0;
                     player.heart -= 1;
@@ -203,9 +205,27 @@ var checkCollisions = function (){
                     allEnemies = enemyEntries(level);
                 }
             }
-
         });
     }
+
+    if(allGems.length >0){
+        if(player.y === allGems[0].y - 24 &&
+            player.x === allGems[0].x - 9
+          ){
+            console.log("gem collisions!"+allGems[0].gem.score);
+            player.count = player.count + allGems[0].gem.score;
+            allGems = [];
+        }
+        /*allGems.forEach=(function (gem) {
+            if(player.y+14 == gem.y &&
+                player.x <= gem.x + 5 &&
+                player.x >= gem.x - 5){
+                console.log("gem collisions");
+            }
+        })*/
+    }
+
+
 
     //reach the goal
     if(player.y == -10){
