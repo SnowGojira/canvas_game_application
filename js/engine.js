@@ -40,6 +40,8 @@ var Engine = (function(global) {
          * our update function since it may be used for smooth animation.
          */
         renderGame(dt);
+
+
         //render();
         //update(dt);
         //updateGems();
@@ -74,8 +76,8 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
+
         updateEntities(dt);
-        updateGems();
         checkCollisions();
     }
 
@@ -91,6 +93,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
+
         player.update();
     }
 
@@ -179,36 +182,29 @@ var Engine = (function(global) {
 
 
         // Before drawing, clear existing canvas
-        // ctx.clearRect(0,0,canvas.width,canvas.height);
-        //
-        //
-        // //draw start game
-        // ctx.fillStyle = "rgba(10, 10, 10)";
-        // ctx.fillRect(0,0,canvas.width,canvas.height);
-        //
-        // selector.render();
-        // selector.update();
-        //
-        // //console.log(selector.isStart + " "+ selector.url);
-        //
-        // for(let i = 0; i < charImages.length; i++){
-        //     ctx.drawImage(Resources.get(charImages[i]), i * 101, 160);
-        // }
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+
+        //draw start game
+        ctx.fillStyle = "rgba(10, 10, 10)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        selector.render();
+        selector.update();
+
+        //console.log(selector.isStart + " "+ selector.url);
+        for(let i = 0; i < charImages.length; i++){
+            ctx.drawImage(Resources.get(charImages[i]), i * 101, 160);
+        }
+
 
         if(selector.isStart){
             ctx.clearRect(0,0,canvas.width,canvas.height);
 
             render();
             update(dt);
+            updateGems();
         }
-
-
-
-        /*for (row = 0; row < numRows; row++) {
-            for (col = 0; col < numCols; col++) {
-                ctx.drawImage(Resources.get(charImages[row]), col * 101, row * 83);
-            }
-        }*/
     }
 
     /* This function does nothing but it could have been a good place to
@@ -250,23 +246,8 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
 
-    document.addEventListener('keyup', function(e) {
-        var allowedKeys = {
-            37: 'left',
-            38: 'up',
-            39: 'right',
-            40: 'down',
-            13: 'enter'
-        };
-        //selector.handleInput(allowedKeys[e.keyCode]);
 
-        if(player){
-            player.handleInput(allowedKeys[e.keyCode]);
-        }
-
-    });
-
-    document.addEventListener('keydown', function(e) {
+    /*document.addEventListener('keydown', function(e) {
         var allowedKeys = {
             37: 'left',
             38: 'up',
@@ -276,11 +257,11 @@ var Engine = (function(global) {
         };
         selector.handleInput(allowedKeys[e.keyCode]);
 
-        /*if(player){
+        /!*if(player){
             player.handleInput(allowedKeys[e.keyCode]);
-        }*/
+        }*!/
 
-    });
+    });*/
 
 
 })(this);

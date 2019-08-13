@@ -136,19 +136,22 @@ var Player = function (url) {
 };
 
 Player.prototype.update = function () {
+    console.log("player position: "+this.x + " "+ this.y + " " + this.orient);
     //move
     if(this.orient != 0){
+        //this.x = this.x + this.stepX*this.orient;
         this.x = this.x + this.stepX*this.orient;
         this.y = this.y + this.stepY*this.orient;
         //empty the container for next move
         this.stepX = 0;
         this.stepY = 0;
+
     }
 };
 
 Player.prototype.render = function () {
     //draw the character
-    console.log("character Sprite "+this.characterSprite);
+    //console.log("character Sprite "+this.characterSprite);
     if(this.characterSprite){
         ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
     }
@@ -163,11 +166,12 @@ Player.prototype.render = function () {
 };
 
 Player.prototype.handleInput = function (e) {
-    console.log("player handle input: "+e);
+
     switch (e) {
         case 'left' :
             this.x >= 101? this.stepX = 101 : this.stepX = 0;
             this.orient = -1;
+            console.log("player handle input: left"+ this.stepX + " " +this.orient);
             break;
         case 'right' :
             this.x <= 303? this.stepX = 101 : this.stepX =0;
@@ -220,6 +224,21 @@ function enemyEntries(level) {
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
+document.addEventListener('keyup', function(e) {
+    var allowedKeys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down',
+        13: 'enter'
+    };
+    selector.handleInput(allowedKeys[e.keyCode]);
+
+    if(player){
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
+
+});
 
 //collisions event logic
 var checkCollisions = function (){
