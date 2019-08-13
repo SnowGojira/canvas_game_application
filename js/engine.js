@@ -39,8 +39,9 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
+        renderGame();
+        //render();
         update(dt);
-        render();
         updateGems();
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -96,7 +97,7 @@ var Engine = (function(global) {
     function updateGems() {
         if(allGems.length == 1 ){
             allGems.forEach(function(gem){
-                gem.show();
+                gem.render();
             });
         }else{
             allGems = [];
@@ -162,6 +163,34 @@ var Engine = (function(global) {
 
         player.render();
 
+    }
+
+    //render start page
+    function renderGame(){
+        var charImages = [
+            'images/char-boy.png',
+            'images/char-cat-girl.png',
+            'images/char-horn-girl.png',
+            'images/char-pink-girl.png',
+            'images/char-princess-girl.png'
+        ];
+
+        var numRows = 2,
+            numCols = 3,
+            row, col;
+
+        // Before drawing, clear existing canvas
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        /* Loop through the number of rows and columns we've defined above
+         * and, using the rowImages array, draw the correct image for that
+         * portion of the "grid"
+         */
+        for (row = 0; row < numRows; row++) {
+            for (col = 0; col < numCols; col++) {
+                ctx.drawImage(Resources.get(charImages[row]), col * 101, row * 83);
+            }
+        }
     }
 
     /* This function does nothing but it could have been a good place to

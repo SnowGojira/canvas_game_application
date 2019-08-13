@@ -55,11 +55,9 @@ var Gem = function(){
     let locY = [97,180,263];
     this.y = locY[Math.round(Math.random() * 2)];
     let locX = [9,110,211,312,413];
-    //let locX = [0,101,202,303,404];
     this.x = locX[Math.round(Math.random() * 4)];
 };
-
-Gem.prototype.show = function () {
+Gem.prototype.render = function () {
     //let image = Resources.get(this.gem.sprite);
     //ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
     ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
@@ -148,7 +146,7 @@ var player = new Player();
 
 //gems init
 var allGems = [];
-
+//initiate a gem object every 2 seconds
 setInterval(function (){
     var gem = new Gem();
     allGems.push(gem);
@@ -183,7 +181,7 @@ document.addEventListener('keyup', function(e) {
 
 //collisions event logic
 var checkCollisions = function (){
-    //collisions
+    //enemies collisions
     if(player.y == 239 ||
         player.y == 156 ||
         player.y == 73){
@@ -200,7 +198,6 @@ var checkCollisions = function (){
                     player.reset();
                 }else {
                     player = new Player();
-
                     level = 3;
                     allEnemies = enemyEntries(level);
                 }
@@ -208,34 +205,26 @@ var checkCollisions = function (){
         });
     }
 
+    //gems collisions
     if(allGems.length >0){
-        if(player.y === allGems[0].y - 24 &&
-            player.x === allGems[0].x - 9
+        if(player.y == allGems[0].y - 24 &&
+            player.x == allGems[0].x - 9
           ){
             console.log("gem collisions!"+allGems[0].gem.score);
             player.count = player.count + allGems[0].gem.score;
             allGems = [];
         }
-        /*allGems.forEach=(function (gem) {
-            if(player.y+14 == gem.y &&
-                player.x <= gem.x + 5 &&
-                player.x >= gem.x - 5){
-                console.log("gem collisions");
-            }
-        })*/
     }
 
 
 
-    //reach the goal
+    //hit the goal
     if(player.y == -10){
-        //player = new Player();
         player.count += 1000;
         player.reset();
         //level up, enemies become more
         level += 1;
         allEnemies = enemyEntries(level);
-        //console.log("goal: "+allEnemies);
     }
 
 };
