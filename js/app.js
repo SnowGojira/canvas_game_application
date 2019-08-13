@@ -49,17 +49,17 @@ Selector.prototype.handleInput = function (e) {
             this.orient = 1;
             break;
         case 'enter':
-            this.isStart = true;
+            isStart = true;
             if(this.x == 0){
-                this.url ='images/char-boy.png';
+                url ='images/char-boy.png';
             }else if(this.x == 101){
-                this.url ='images/char-cat-girl.png';
+                url ='images/char-cat-girl.png';
             }else if(this.x == 202){
-                this.url ='images/char-horn-girl.png';
+                url ='images/char-horn-girl.png';
             }else if(this.x == 303){
-                this.url ='images/char-pink-girl.png';
+                url ='images/char-pink-girl.png';
             }else if(this.x == 404){
-                this.url ='images/char-princess-girl.png';
+                url ='images/char-princess-girl.png';
             }
 
             break;
@@ -119,8 +119,10 @@ Gem.prototype.render = function () {
 
 
 // Player
-var Player = function (url) {
-    this.characterSprite = url;
+//var Player = function (url) {
+var Player = function () {
+    //this.characterSprite = url;
+    this.characterSprite = 'images/char-boy.png';
     this.heartSprite = 'images/Heart.png';
 
     this.count = 0;
@@ -138,6 +140,7 @@ var Player = function (url) {
 Player.prototype.update = function () {
     console.log("player position: "+this.x + " "+ this.y + " " + this.orient);
     //move
+    //this.x = this.x + 1;
     if(this.orient != 0){
         //this.x = this.x + this.stepX*this.orient;
         this.x = this.x + this.stepX*this.orient;
@@ -152,10 +155,11 @@ Player.prototype.update = function () {
 Player.prototype.render = function () {
     //draw the character
     //console.log("character Sprite "+this.characterSprite);
-    if(this.characterSprite){
-        ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
-    }
+    // if(this.characterSprite){
+    //     ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
+    // }
 
+    ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
     //draw the heart symbol for life
     for(let i = this.heart; i>=1 ; i--){
         ctx.drawImage(Resources.get(this.heartSprite), 500-i*35, 5,32,50);
@@ -200,7 +204,9 @@ Player.prototype.reset = function () {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var selector = new Selector(),
-    player,
+    //player = new Player('images/char-boy.png'),
+    player = new Player(),
+    //player,
     level = 3,
     allEnemies = enemyEntries(3),
     allGems = [];
@@ -210,7 +216,13 @@ setInterval(function (){
     allGems.push(gem);
 },2000);
 
+var url,
+    isStart = false;
+function startLogic(e) {
+   if( e === 'enter'){
 
+   }
+}
 
 ////////////////////////////////////////function to reference/////////////////////////////
 //random generator
@@ -232,11 +244,22 @@ document.addEventListener('keyup', function(e) {
         40: 'down',
         13: 'enter'
     };
-    selector.handleInput(allowedKeys[e.keyCode]);
 
-    if(player){
+
+
+    /*if(player){
+        console.log("player: "+ player);
         player.handleInput(allowedKeys[e.keyCode]);
-    }
+    }*/
+
+    player.handleInput(allowedKeys[e.keyCode]);
+
+    /*if(selector){
+        console.log("selector: "+ selector);
+        selector.handleInput(allowedKeys[e.keyCode]);
+    }*/
+
+    //startLogic(allowedKeys[e.keyCode]);
 
 });
 

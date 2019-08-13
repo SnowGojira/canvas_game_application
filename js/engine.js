@@ -39,7 +39,17 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        renderGame(dt);
+        //if(isStart){
+            //console.log("isStart "+ isStart);
+            //reset();
+            selector = null;
+            //ctx.clearRect(0,0,canvas.width,canvas.height);
+            render();
+            update(dt);
+            updateGems();
+        //}else{
+           // renderStart();
+        //}
 
 
         //render();
@@ -165,13 +175,14 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        player = new Player(selector.url);
+        //player = new Player(url);
+        //player = new Player('images/char-boy.png');
         player.render();
 
     }
 
     //render start page
-    function renderGame(dt){
+    function renderStart(){
         var charImages = [
             'images/char-boy.png',
             'images/char-cat-girl.png',
@@ -189,6 +200,7 @@ var Engine = (function(global) {
         ctx.fillStyle = "rgba(10, 10, 10)";
         ctx.fillRect(0,0,canvas.width,canvas.height);
 
+
         selector.render();
         selector.update();
 
@@ -198,13 +210,7 @@ var Engine = (function(global) {
         }
 
 
-        if(selector.isStart){
-            ctx.clearRect(0,0,canvas.width,canvas.height);
 
-            render();
-            update(dt);
-            updateGems();
-        }
     }
 
     /* This function does nothing but it could have been a good place to
