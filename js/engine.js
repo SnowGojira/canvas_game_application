@@ -161,6 +161,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
+
         player = new Player(selector.url);
         player.render();
 
@@ -178,21 +179,21 @@ var Engine = (function(global) {
 
 
         // Before drawing, clear existing canvas
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-
-
-        //draw start game
-        ctx.fillStyle = "rgba(10, 10, 10)";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-
-        selector.render();
-        selector.update();
-
-        console.log(selector.isStart + " "+ selector.url);
-
-        for(let i = 0; i < charImages.length; i++){
-            ctx.drawImage(Resources.get(charImages[i]), i * 101, 160);
-        }
+        // ctx.clearRect(0,0,canvas.width,canvas.height);
+        //
+        //
+        // //draw start game
+        // ctx.fillStyle = "rgba(10, 10, 10)";
+        // ctx.fillRect(0,0,canvas.width,canvas.height);
+        //
+        // selector.render();
+        // selector.update();
+        //
+        // //console.log(selector.isStart + " "+ selector.url);
+        //
+        // for(let i = 0; i < charImages.length; i++){
+        //     ctx.drawImage(Resources.get(charImages[i]), i * 101, 160);
+        // }
 
         if(selector.isStart){
             ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -248,6 +249,38 @@ var Engine = (function(global) {
      * object when run in a browser) so that developers can use it more easily
      * from within their app.js files.
      */
-    //global.ctx = ctx;
+
+    document.addEventListener('keyup', function(e) {
+        var allowedKeys = {
+            37: 'left',
+            38: 'up',
+            39: 'right',
+            40: 'down',
+            13: 'enter'
+        };
+        //selector.handleInput(allowedKeys[e.keyCode]);
+
+        if(player){
+            player.handleInput(allowedKeys[e.keyCode]);
+        }
+
+    });
+
+    document.addEventListener('keydown', function(e) {
+        var allowedKeys = {
+            37: 'left',
+            38: 'up',
+            39: 'right',
+            40: 'down',
+            13: 'enter'
+        };
+        selector.handleInput(allowedKeys[e.keyCode]);
+
+        /*if(player){
+            player.handleInput(allowedKeys[e.keyCode]);
+        }*/
+
+    });
+
 
 })(this);
