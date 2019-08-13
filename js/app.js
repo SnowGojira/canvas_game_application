@@ -14,6 +14,56 @@
 })();
 
 /////////////////////////////////////////Class/////////////////////////////////////
+//Selector
+var Selector = function () {
+    this.url = '';
+    this.isStart = false;
+
+    this.step = 0;
+    this.orient = 0;
+    this.x = 101;
+    this.selectorSprite = 'images/Selector.png';
+};
+
+Selector.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.selectorSprite), this.x , 150);
+};
+
+Selector.prototype.update = function () {
+    if(this.orient != 0){
+        this.x = this.x + this.orient * this.step;
+        this.step = 0;
+    }
+};
+
+Selector.prototype.handleInput = function (e) {
+    switch (e) {
+        case 'left' :
+            this.x >= 101 ? this.step = 101 : this.step = 0;
+            this.orient = -1;
+            break;
+        case 'right' :
+            this.x <= 303 ? this.step = 101 : this.step = 0;
+            this.orient = 1;
+            break;
+        case 'enter':
+            this.isStart = true;
+            if(this.x == 0){
+                this.url ='images/char-boy.png';
+            }else if(this.x == 101){
+                this.url ='images/char-cat-girl.png';
+            }else if(this.x == 202){
+                this.url ='images/char-horn-girl.png';
+            }else if(this.x == 303){
+                this.url ='images/char-pink-girl.png';
+            }else if(this.x == 404){
+                this.url ='images/char-princess-girl.png';
+            }
+
+            break;
+    }
+};
+
 //Enemy
 var Enemy = function() {
     this.sprite = 'images/enemy-bug.png';
@@ -67,8 +117,8 @@ Gem.prototype.render = function () {
 
 
 // Player
-var Player = function () {
-    this.characterSprite = 'images/char-horn-girl.png';
+var Player = function (url) {
+    this.characterSprite = url;
     this.heartSprite = 'images/Heart.png';
 
     this.count = 0;
@@ -140,12 +190,11 @@ Player.prototype.reset = function () {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var level = 3;
-var allEnemies = enemyEntries(3);
-var player = new Player();
-
-//gems init
-var allGems = [];
+var selector = new Selector(),
+    player,
+    level = 3,
+    allEnemies = enemyEntries(3),
+    allGems = [];
 //initiate a gem object every 2 seconds
 setInterval(function (){
     var gem = new Gem();
@@ -175,8 +224,10 @@ document.addEventListener('keyup', function(e) {
         40: 'down',
         13: 'enter'
     };
-
-    player.handleInput(allowedKeys[e.keyCode]);
+    selector.handleInput(allowedKeys[e.keyCode]);
+    if(player != null){
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
 });
 
 //collisions event logic

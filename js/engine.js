@@ -39,10 +39,10 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        renderGame();
+        renderGame(dt);
         //render();
-        update(dt);
-        updateGems();
+        //update(dt);
+        //updateGems();
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -75,6 +75,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
+        updateGems();
         checkCollisions();
     }
 
@@ -146,7 +147,7 @@ var Engine = (function(global) {
             }
         }
 
-        renderEntities();
+            renderEntities();
     }
 
     /* This function is called by the render function and is called on each game
@@ -160,13 +161,13 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
+        player = new Player(selector.url);
         player.render();
 
     }
 
     //render start page
-    function renderGame(){
+    function renderGame(dt){
         var charImages = [
             'images/char-boy.png',
             'images/char-cat-girl.png',
@@ -175,22 +176,38 @@ var Engine = (function(global) {
             'images/char-princess-girl.png'
         ];
 
-        var numRows = 2,
-            numCols = 3,
-            row, col;
 
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        /* Loop through the number of rows and columns we've defined above
-         * and, using the rowImages array, draw the correct image for that
-         * portion of the "grid"
-         */
-        for (row = 0; row < numRows; row++) {
+
+        //draw start game
+        ctx.fillStyle = "rgba(10, 10, 10)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+        selector.render();
+        selector.update();
+
+        console.log(selector.isStart + " "+ selector.url);
+
+        for(let i = 0; i < charImages.length; i++){
+            ctx.drawImage(Resources.get(charImages[i]), i * 101, 160);
+        }
+
+        if(selector.isStart){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+
+            render();
+            update(dt);
+        }
+
+
+
+        /*for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
                 ctx.drawImage(Resources.get(charImages[row]), col * 101, row * 83);
             }
-        }
+        }*/
     }
 
     /* This function does nothing but it could have been a good place to
