@@ -22,7 +22,7 @@ var Engine = (function(global) {
     var win = global.window,
         lastTime;
 
-
+    // player = new Player(url);
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -39,17 +39,19 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        //if(isStart){
-            //console.log("isStart "+ isStart);
-            //reset();
+        if(isStart){
+            // console.log("isStart "+ isStart);
+            // reset();
             selector = null;
-            //ctx.clearRect(0,0,canvas.width,canvas.height);
+            // player = new Player(url);
+            ctx.clearRect(0,0,canvas.width,canvas.height);
             render();
             update(dt);
             updateGems();
-        //}else{
-           // renderStart();
-        //}
+        }
+        // else{
+        //   renderStart();
+        // }
 
 
         //render();
@@ -71,6 +73,10 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
+        // player = new Player('images/char-boy.png');
+        if(url){
+            player = new Player(url);
+        }
         reset();
         lastTime = Date.now();
         main();
@@ -175,8 +181,6 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        //player = new Player(url);
-        //player = new Player('images/char-boy.png');
         player.render();
 
     }

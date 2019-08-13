@@ -119,10 +119,10 @@ Gem.prototype.render = function () {
 
 
 // Player
-//var Player = function (url) {
-var Player = function () {
-    //this.characterSprite = url;
-    this.characterSprite = 'images/char-boy.png';
+var Player = function (url_str) {
+// var Player = function () {
+    this.characterSprite = url_str;
+    // this.characterSprite = 'images/char-boy.png';
     this.heartSprite = 'images/Heart.png';
 
     this.count = 0;
@@ -154,12 +154,12 @@ Player.prototype.update = function () {
 
 Player.prototype.render = function () {
     //draw the character
-    //console.log("character Sprite "+this.characterSprite);
-    // if(this.characterSprite){
-    //     ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
-    // }
+    console.log("character Sprite "+this.characterSprite);
+    if(this.characterSprite){
+        ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
+    }
 
-    ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
+    //ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
     //draw the heart symbol for life
     for(let i = this.heart; i>=1 ; i--){
         ctx.drawImage(Resources.get(this.heartSprite), 500-i*35, 5,32,50);
@@ -203,10 +203,15 @@ Player.prototype.reset = function () {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+// var url,
+var url = 'images/char-boy.png',
+    // isStart = false;
+    isStart = true;
 var selector = new Selector(),
     //player = new Player('images/char-boy.png'),
-    player = new Player(),
-    //player,
+    // player = new Player(url),
+    // player = new Player(),
+    player,
     level = 3,
     allEnemies = enemyEntries(3),
     allGems = [];
@@ -216,8 +221,6 @@ setInterval(function (){
     allGems.push(gem);
 },2000);
 
-var url,
-    isStart = false;
 function startLogic(e) {
    if( e === 'enter'){
 
@@ -247,17 +250,17 @@ document.addEventListener('keyup', function(e) {
 
 
 
-    /*if(player){
-        console.log("player: "+ player);
-        player.handleInput(allowedKeys[e.keyCode]);
-    }*/
+    // if(url){
+    //     console.log("player: "+ player);
+    //     player.handleInput(allowedKeys[e.keyCode]);
+    // }
 
     player.handleInput(allowedKeys[e.keyCode]);
 
-    /*if(selector){
-        console.log("selector: "+ selector);
-        selector.handleInput(allowedKeys[e.keyCode]);
-    }*/
+    // if(selector){
+    //     console.log("selector: "+ selector);
+    //     selector.handleInput(allowedKeys[e.keyCode]);
+    // }
 
     //startLogic(allowedKeys[e.keyCode]);
 
