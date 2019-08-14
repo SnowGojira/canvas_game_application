@@ -67,13 +67,14 @@ player.prototype.update = function () {
     //move
     //this.handleInput();
     if(this.orient != 0){
-
         this.x = this.x + this.stepX*this.orient;
         this.y = this.y + this.stepY*this.orient;
 
         this.stepX = 0;
         this.stepY = 0;
     }
+
+    //collision
 
 };
 
@@ -83,11 +84,12 @@ player.prototype.render = function () {
 
     ctx.drawImage(Resources.get(this.character), this.x, this.y);
 
+
 };
 
 player.prototype.handleInput = function (e) {
 
-    console.log("this.stepX "+this.x +",this.stepY "+this.y);
+    //console.log("this.stepX "+this.x +",this.stepY "+this.y);
     switch (e) {
         case 'left' :
             this.x >= 101? this.stepX = 101 : this.stepX = 0;
@@ -121,7 +123,8 @@ var enemy2 = new Enemy(-100,60,4);
 var enemy3 = new Enemy(-60,145,5);
 var enemy4 = new Enemy(-200,230,2);
 
-var allEnemies = [enemy1,enemy2,enemy3,enemy4];
+//var allEnemies = [enemy1,enemy2,enemy3,enemy4];
+var allEnemies = [enemy3];
 
 var player = new player();
 
@@ -138,3 +141,18 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+function checkCollisions() {
+    //console.log("Collision zone !" + player.y);
+    if (player.y == 239 || player.y == 156 || player.y == 73){
+
+        allEnemies.forEach(function(enemy) {
+            if(enemy.x-5<=player.x && player.x<= enemy.x+5){
+                console.log("Collision zone !"+enemy.x);
+            }
+
+        });
+        //console.log("Collision zone !");
+
+    }
+}
