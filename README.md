@@ -25,5 +25,5 @@ Use  `<=` and `=>` to select the character which you like. Press `enter` to star
 ![capture game](/images/capture_start.png)
 
 When you reach the river, you can get 1000 scores for reward. If you can collect gems, you score will be even higher. Be careful
-to the bugs! Use `⬅️``➡️``⬆️️``⬇️️` to avoid them. You only have 3 chances.
+to the bugs! Use `⬅️ ➡️ ⬆️️ ⬇️️` to avoid them. You only have 3 chances.
 ![capture game](/images/capture_game.png)
