@@ -16,9 +16,9 @@
 /////////////////////////////////////////Class/////////////////////////////////////
 //Selector
 var Selector = function () {
-    this.url = '';
+    //this.url = '';
     //this.isStart = true;
-    this.isStart = false;
+    //this.isStart = false;
 
     this.step = 0;
     this.orient = 0;
@@ -62,7 +62,7 @@ Selector.prototype.handleInput = function (e) {
                 url ='images/char-princess-girl.png';
             }
 
-            break;
+            return player = new Player(url);
     }
 };
 
@@ -109,13 +109,10 @@ var Gem = function(){
     let locX = [9,110,211,312,413];
     this.x = locX[Math.round(Math.random() * 4)];
 };
+
 Gem.prototype.render = function () {
-    //let image = Resources.get(this.gem.sprite);
-    //ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
     ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
-
 };
-
 
 
 // Player
@@ -153,13 +150,13 @@ Player.prototype.update = function () {
 
 Player.prototype.render = function () {
     //draw the character
-    console.log("character Sprite "+this.characterSprite);
+    // console.log("character Sprite "+this.characterSprite);
     if(this.characterSprite){
         ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
     }
 
     //ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
-    //draw the heart symbol for life
+    //draw life hearts
     for(let i = this.heart; i>=1 ; i--){
         ctx.drawImage(Resources.get(this.heartSprite), 500-i*35, 5,32,50);
     }
@@ -204,7 +201,8 @@ Player.prototype.reset = function () {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 // var url,
-var url = 'images/char-boy.png',
+// var url = 'images/char-boy.png',
+var url = '',
     // isStart = false;
     isStart = true;
 var selector = new Selector(),
@@ -221,14 +219,6 @@ setInterval(function (){
     allGems.push(gem);
 },2000);
 
-/*function startLogic(e) {
-   if( e === 'enter'){
-//var allEnemies = [enemy1,enemy2,enemy3,enemy4];
-var allEnemies = [enemy3];
-
-var player = new player();
-   }
-}*/
 
 ////////////////////////////////////////function to reference/////////////////////////////
 //random generator
@@ -253,17 +243,17 @@ document.addEventListener('keyup', function(e) {
 
 
 
-    // if(url){
-    //     console.log("player: "+ player);
-    //     player.handleInput(allowedKeys[e.keyCode]);
-    // }
+    if(url){
+        console.log("player: "+ player);
+        player.handleInput(allowedKeys[e.keyCode]);
+    }
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    // player.handleInput(allowedKeys[e.keyCode]);
 
-    // if(selector){
-    //     console.log("selector: "+ selector);
-    //     selector.handleInput(allowedKeys[e.keyCode]);
-    // }
+    if(selector){
+        console.log("selector: "+ selector);
+        selector.handleInput(allowedKeys[e.keyCode]);
+    }
 
     //startLogic(allowedKeys[e.keyCode]);
 
