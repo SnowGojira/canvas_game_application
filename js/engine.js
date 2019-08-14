@@ -39,17 +39,11 @@ var Engine = (function(global) {
          * our update function since it may be used for smooth animation.
          */
         if(url){
-            // console.log("isStart "+ isStart);
-            // reset();
-            //player = new Player(url);
-            selector = null;
-            // player = new Player(url);
             ctx.clearRect(0,0,canvas.width,canvas.height);
             render();
             update(dt);
             updateGems();
-        }
-        else{
+        } else{
           renderStart();
         }
 

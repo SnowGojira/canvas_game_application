@@ -16,14 +16,11 @@
 /////////////////////////////////////////Class/////////////////////////////////////
 //Selector
 var Selector = function () {
-    //this.url = '';
-    //this.isStart = true;
-    //this.isStart = false;
-
+    this.selectorSprite = 'images/Selector.png';
     this.step = 0;
     this.orient = 0;
     this.x = 101;
-    this.selectorSprite = 'images/Selector.png';
+
 };
 
 Selector.prototype.render = function () {
@@ -38,7 +35,7 @@ Selector.prototype.update = function () {
 };
 
 Selector.prototype.handleInput = function (e) {
-    console.log( "selector handler");
+
     switch (e) {
         case 'left' :
             this.x >= 101 ? this.step = 101 : this.step = 0;
@@ -49,7 +46,6 @@ Selector.prototype.handleInput = function (e) {
             this.orient = 1;
             break;
         case 'enter':
-            isStart = true;
             if(this.x == 0){
                 url ='images/char-boy.png';
             }else if(this.x == 101){
@@ -135,9 +131,7 @@ var Player = function (url_str) {
 };
 
 Player.prototype.update = function () {
-    console.log("player position: "+this.x + " "+ this.y + " " + this.orient);
-    //move
-    //this.x = this.x + 1;
+
     if(this.orient != 0){
         //this.x = this.x + this.stepX*this.orient;
         this.x = this.x + this.stepX*this.orient;
@@ -150,12 +144,10 @@ Player.prototype.update = function () {
 
 Player.prototype.render = function () {
     //draw the character
-    // console.log("character Sprite "+this.characterSprite);
     if(this.characterSprite){
         ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
     }
 
-    //ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
     //draw life hearts
     for(let i = this.heart; i>=1 ; i--){
         ctx.drawImage(Resources.get(this.heartSprite), 500-i*35, 5,32,50);
@@ -167,12 +159,10 @@ Player.prototype.render = function () {
 
 Player.prototype.handleInput = function (e) {
 
-    //console.log("this.stepX "+this.x +",this.stepY "+this.y);
     switch (e) {
         case 'left' :
             this.x >= 101? this.stepX = 101 : this.stepX = 0;
             this.orient = -1;
-            console.log("player handle input: left"+ this.stepX + " " +this.orient);
             break;
         case 'right' :
             this.x <= 303? this.stepX = 101 : this.stepX =0;
@@ -203,16 +193,13 @@ Player.prototype.reset = function () {
 // var url,
 // var url = 'images/char-boy.png',
 var url = '',
-    // isStart = false;
-    isStart = true;
+    level = 3;
+
 var selector = new Selector(),
-    //player = new Player('images/char-boy.png'),
-    // player = new Player(url),
-    // player = new Player(),
     player,
-    level = 3,
-    allEnemies = enemyEntries(3),
+    allEnemies = enemyEntries(level),
     allGems = [];
+
 //initiate a gem object every 2 seconds
 setInterval(function (){
     var gem = new Gem();
@@ -244,18 +231,10 @@ document.addEventListener('keyup', function(e) {
 
 
     if(url){
-        console.log("player: "+ player);
         player.handleInput(allowedKeys[e.keyCode]);
     }
 
-    // player.handleInput(allowedKeys[e.keyCode]);
-
-    if(selector){
-        console.log("selector: "+ selector);
-        selector.handleInput(allowedKeys[e.keyCode]);
-    }
-
-    //startLogic(allowedKeys[e.keyCode]);
+    selector.handleInput(allowedKeys[e.keyCode]);
 
 });
 
@@ -277,7 +256,7 @@ var checkCollisions = function (){
                     player.heart -= 1;
                     player.reset();
                 }else {
-                    player = new Player();
+                    player = new Player(url);
                     level = 3;
                     allEnemies = enemyEntries(level);
                 }
@@ -290,7 +269,6 @@ var checkCollisions = function (){
         if(player.y == allGems[0].y - 24 &&
             player.x == allGems[0].x - 9
           ){
-            console.log("gem collisions!"+allGems[0].gem.score);
             player.count = player.count + allGems[0].gem.score;
             allGems = [];
         }
