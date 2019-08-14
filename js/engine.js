@@ -22,7 +22,7 @@ var Engine = (function(global) {
     var win = global.window,
         lastTime;
 
-
+    // player = new Player(url);
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -39,9 +39,24 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        update(dt);
-        render();
+        if(isStart){
+            // console.log("isStart "+ isStart);
+            // reset();
+            selector = null;
+            // player = new Player(url);
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            render();
+            update(dt);
+            updateGems();
+        }
+        // else{
+        //   renderStart();
+        // }
 
+
+        //render();
+        //update(dt);
+        //updateGems();
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -58,6 +73,10 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
+        // player = new Player('images/char-boy.png');
+        if(url){
+            player = new Player(url);
+        }
         reset();
         lastTime = Date.now();
         main();
@@ -73,10 +92,11 @@ var Engine = (function(global) {
      * on the entities themselves within your app.js file).
      */
     function update(dt) {
-        updateEntities(dt);
 
+        updateEntities(dt);
         checkCollisions();
     }
+
 
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
@@ -89,7 +109,19 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
+
         player.update();
+    }
+
+
+    function updateGems() {
+        if(allGems.length == 1 ){
+            allGems.forEach(function(gem){
+                gem.render();
+            });
+        }else{
+            allGems = [];
+        }
     }
 
     /* This function initially draws the "game level", it will then call
@@ -134,7 +166,7 @@ var Engine = (function(global) {
             }
         }
 
-        renderEntities();
+            renderEntities();
     }
 
     /* This function is called by the render function and is called on each game
@@ -150,6 +182,39 @@ var Engine = (function(global) {
         });
 
         player.render();
+
+    }
+
+    //render start page
+    function renderStart(){
+        var charImages = [
+            'images/char-boy.png',
+            'images/char-cat-girl.png',
+            'images/char-horn-girl.png',
+            'images/char-pink-girl.png',
+            'images/char-princess-girl.png'
+        ];
+
+
+        // Before drawing, clear existing canvas
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+
+        //draw start game
+        ctx.fillStyle = "rgba(10, 10, 10)";
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+
+
+        selector.render();
+        selector.update();
+
+        //console.log(selector.isStart + " "+ selector.url);
+        for(let i = 0; i < charImages.length; i++){
+            ctx.drawImage(Resources.get(charImages[i]), i * 101, 160);
+        }
+
+
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -170,7 +235,19 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/char-horn-girl.png'
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
+        'images/Gem-Blue.png',
+        'images/Gem-Green.png',
+        'images/Gem-Orange.png',
+        'images/grass-block.png',
+        'images/Heart.png',
+        'images/Key.png',
+        'images/Rock.png',
+        'images/Selector.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 
@@ -178,5 +255,23 @@ var Engine = (function(global) {
      * object when run in a browser) so that developers can use it more easily
      * from within their app.js files.
      */
-    //global.ctx = ctx;
+
+
+    /*document.addEventListener('keydown', function(e) {
+        var allowedKeys = {
+            37: 'left',
+            38: 'up',
+            39: 'right',
+            40: 'down',
+            13: 'enter'
+        };
+        selector.handleInput(allowedKeys[e.keyCode]);
+
+        /!*if(player){
+            player.handleInput(allowedKeys[e.keyCode]);
+        }*!/
+
+    });*/
+
+
 })(this);
