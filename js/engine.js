@@ -22,7 +22,6 @@ var Engine = (function(global) {
     var win = global.window,
         lastTime;
 
-    // player = new Player(url);
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -39,24 +38,16 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        if(isStart){
-            // console.log("isStart "+ isStart);
-            // reset();
-            selector = null;
-            // player = new Player(url);
+        if(url){
             ctx.clearRect(0,0,canvas.width,canvas.height);
             render();
             update(dt);
             updateGems();
+        } else{
+          renderStart();
         }
-        // else{
-        //   renderStart();
-        // }
 
 
-        //render();
-        //update(dt);
-        //updateGems();
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -74,9 +65,7 @@ var Engine = (function(global) {
      */
     function init() {
         // player = new Player('images/char-boy.png');
-        if(url){
-            player = new Player(url);
-        }
+
         reset();
         lastTime = Date.now();
         main();

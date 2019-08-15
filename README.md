@@ -4,6 +4,7 @@
 
 - [Instructions](#instructions)
 - [Contributing](#contributing)
+- [Play](#play)
 
 ## Instructions
 
@@ -18,3 +19,13 @@ For detailed instructions on how to get started, check out this [guide](https://
 ## Contributing
 
 This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+
+## Play
+  Use  `<=` and `=>` to select the character which you like. Press `enter` to start the game.
+  
+  ![capture game](/images/capture_start.png)
+
+  When you reach the river, you can get 1000 scores for reward. If you can collect gems, you score will be even higher. Be careful
+to the bugs! Use `⬅️ ➡️ ⬆️️ ⬇️️` to avoid them. You only have 3 chances.
+  
+  ![capture game](/images/capture_game.png)
