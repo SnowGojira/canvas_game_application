@@ -1,3 +1,4 @@
+'use strict';
 //start the canvas
 (function initCanvas(){
     var doc = window.document,
