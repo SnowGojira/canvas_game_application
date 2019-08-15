@@ -18,7 +18,7 @@ If you do not familiar with git, you can just download from [my git](https://git
 
 ## Setup
 
-When you finish the downloading. Open the file to find **index.html**. Click it. The game will be setup.
+When you finish the downloading. Open the file to find `index.html`. Click it. The game will be setup.
 
 ## Play
   Use  `<=` and `=>` to select the character which you like. Press `enter` to start the game.
