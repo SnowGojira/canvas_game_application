@@ -251,8 +251,7 @@ var checkCollisions = function (){
         if (player.x < enemy.x + enemy.width &&
             player.x + player.width > enemy.x &&
             player.y == enemy.y + 11) {
-            console.log("enemy.x: " + enemy.width + " player.x: " + player.x);
-            //enemy and heart combine logic
+            //combine hit enemy and delete heart logic
             if (player.heart > 1) {
                 player.count > 0 ? player.count -= 400 : player.count = 0;
                 player.heart -= 1;
@@ -274,8 +273,6 @@ var checkCollisions = function (){
             allGems = [];
         }
     }
-
-
 
     //hit the goal
     if(player.y == -10){
