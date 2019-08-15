@@ -64,23 +64,27 @@ Selector.prototype.handleInput = function (e) {
 };
 
 //Enemy
-var Enemy = function() {
-    this.sprite = 'images/enemy-bug.png';
-    this.x = -1000+Math.round(Math.random() * 10)*100;
-    this.start = this.x;
-    let locY = [62,145,228];
-    this.y = locY[Math.round(Math.random() * 2)];
-    this.v = 1+Math.round(Math.random() * 4);
-};
+class Enemy {
+    constructor(){
+        this.sprite = 'images/enemy-bug.png';
+        this.x = -1000+Math.round(Math.random() * 10)*100;
+        this.start = this.x;
+        let locY = [62,145,228];
+        this.y = locY[Math.round(Math.random() * 2)];
+        this.v = 1+Math.round(Math.random() * 4);
+        this.width;
+    }
 
-Enemy.prototype.update = function(dt) {
-    //move with a velocity
-    this.x > canvas.width? this.x = this.start : this.x = this.x + this.v/(50*dt);
-};
+    update(dt){
+        //move with a velocity
+        this.x > canvas.width? this.x = this.start : this.x = this.x + this.v/(50*dt);
+    }
 
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+    render(){
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        this.width = Resources.get(this.sprite).width;
+    }
+}
 
 //Gem
 var Gem = function(){
@@ -114,13 +118,13 @@ Gem.prototype.render = function () {
 
 // Player
 var Player = function (url_str) {
-// var Player = function () {
     this.characterSprite = url_str;
-    // this.characterSprite = 'images/char-boy.png';
     this.heartSprite = 'images/Heart.png';
 
     this.count = 0;
     this.heart = 3;
+
+    this.width;
 
     this.startX = 202;
     this.startY = 405;
@@ -147,6 +151,7 @@ Player.prototype.render = function () {
     //draw the character
     if(this.characterSprite){
         ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
+        this.width = Resources.get(this.characterSprite).width;
     }
 
     //draw life hearts
@@ -242,28 +247,23 @@ document.addEventListener('keyup', function(e) {
 //collisions event logic
 var checkCollisions = function (){
     //enemies collisions
-    if(player.y == 239 ||
-        player.y == 156 ||
-        player.y == 73){
-        //collision zone
-        allEnemies.forEach(function(enemy){
-            if(player.x >= enemy.x-5 &&
-                player.x <= enemy.x +5 &&
-                player.y == enemy.y + 11
-              ){
-                //enemy and heart combine logic
-                if(player.heart > 1){
-                    player.count>0? player.count-= 400 : player.count=0;
-                    player.heart -= 1;
-                    player.reset();
-                }else {
-                    player = new Player(url);
-                    level = 3;
-                    allEnemies = enemyEntries(level);
-                }
+    allEnemies.forEach(function (enemy) {
+        if (player.x < enemy.x + enemy.width &&
+            player.x + player.width > enemy.x &&
+            player.y == enemy.y + 11) {
+            console.log("enemy.x: " + enemy.width + " player.x: " + player.x);
+            //enemy and heart combine logic
+            if (player.heart > 1) {
+                player.count > 0 ? player.count -= 400 : player.count = 0;
+                player.heart -= 1;
+                player.reset();
+            } else {
+                player = new Player(url);
+                level = 3;
+                allEnemies = enemyEntries(level);
             }
-        });
-    }
+        }
+    });
 
     //gems collisions
     if(allGems.length >0){
