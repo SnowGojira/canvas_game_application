@@ -104,8 +104,9 @@ var Engine = (function(global) {
 
 
     function updateGems() {
+
         if(allGems.length == 1 ){
-            allGems.forEach(function(gem){
+            allGems.forEach((gem) => {
                 gem.renderUI();
             });
         }else{
@@ -195,7 +196,6 @@ var Engine = (function(global) {
 
 
         selector.renderUI();
-        //selector.update();
 
         //console.log(selector.isStart + " "+ selector.url);
         for(let i = 0; i < charImages.length; i++){

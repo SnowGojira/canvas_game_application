@@ -89,32 +89,38 @@ class Enemy {
 }
 
 //Gem
-var Gem = function(){
-    var blueGem = {
-        sprite : 'images/Gem-Blue.png',
-        score : 100
-    };
+var Crystal = function (sprite,score) {
+    this.sprite = sprite;
+    this.score = score;
 
-    var greenGem = {
-        sprite : 'images/Gem-Green.png',
-        score : 200
-    };
-
-    var orangeGem = {
-        sprite : 'images/Gem-Orange.png',
-        score : 300
-    };
-
-    let gemArr = [blueGem,greenGem,orangeGem];
-    this.gem = gemArr[Math.round(Math.random() * 2)];
     let locY = [97,180,263];
     this.y = locY[Math.round(Math.random() * 2)];
     let locX = [9,110,211,312,413];
     this.x = locX[Math.round(Math.random() * 4)];
 };
 
-Gem.prototype.renderUI = function () {
-    ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
+Crystal.prototype.renderUI = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y,80,120);
+};
+
+var Gem = function(){
+    Crystal.call(this);
+    this.gem;
+};
+
+Gem.prototype = Object.create(Crystal.prototype);
+
+Gem.prototype.update = function () {
+    //add gems every two seconds
+    setInterval(() => {
+        let BlueGem = new Crystal('images/Gem-Blue.png',100),
+            GreenGem = new Crystal('images/Gem-Green.png',200),
+            RedGem = new Crystal('images/Gem-Blue.png',300),
+            gemArr = [BlueGem,GreenGem,RedGem];
+        this.gem = gemArr[Math.round(Math.random() * 2)];
+        allGems.push(this.gem);
+    },2000);
+
 };
 
 
@@ -206,13 +212,11 @@ var url = '',
 var selector = new Selector(),
     player,
     allEnemies = enemyEntries(level),
+    gem = new Gem(),
     allGems = [];
 
-//initiate a gem object every 2 seconds
-setInterval(() => {
-    var gem = new Gem();
-    allGems.push(gem);
-},2000);
+    gem.update();
+
 
 
 ////////////////////////////////////////function to reference/////////////////////////////
@@ -266,12 +270,12 @@ var checkCollisions = function (){
         }
     });
 
-    //gems collisions
+    //hit the gems
     if(allGems.length >0){
         if(player.y == allGems[0].y - 24 &&
             player.x == allGems[0].x - 9
           ){
-            player.count = player.count + allGems[0].gem.score;
+            player.count = player.count + allGems[0].score;
             allGems = [];
         }
     }
