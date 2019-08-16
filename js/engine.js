@@ -1,7 +1,7 @@
 /* Engine.js
- * This file provides the game loop functionality (update entities and render),
+ * This file provides the game loop functionality (update entities and renderUI),
  * draws the initial game board on the screen, and then calls the update and
- * render methods on your player and enemy objects (defined in your app.js).
+ * renderUI methods on your player and enemy objects (defined in your app.js).
  *
  * A game engine works by drawing the entire game screen over and over, kind of
  * like a flipbook you may have created as a kid. When your player moves across
@@ -23,7 +23,7 @@ var Engine = (function(global) {
         lastTime;
 
     /* This function serves as the kickoff point for the game loop itself
-     * and handles properly calling the update and render methods.
+     * and handles properly calling the update and renderUI methods.
      */
     function main() {
         /* Get our time delta information which is required if your game
@@ -35,7 +35,7 @@ var Engine = (function(global) {
         var now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
-        /* Call our update/render functions, pass along the time delta to
+        /* Call our update/renderUI functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
         if(url){
@@ -92,7 +92,7 @@ var Engine = (function(global) {
      * their update() methods. It will then call the update function for your
      * player object. These update methods should focus purely on updating
      * the data/properties related to the object. Do your drawing in your
-     * render methods.
+     * renderUI methods.
      */
     function updateEntities(dt) {
         allEnemies.forEach(function(enemy) {
@@ -106,7 +106,7 @@ var Engine = (function(global) {
     function updateGems() {
         if(allGems.length == 1 ){
             allGems.forEach(function(gem){
-                gem.render();
+                gem.renderUI();
             });
         }else{
             allGems = [];
@@ -158,23 +158,23 @@ var Engine = (function(global) {
             renderEntities();
     }
 
-    /* This function is called by the render function and is called on each game
-     * tick. Its purpose is to then call the render functions you have defined
+    /* This function is called by the renderUI function and is called on each game
+     * tick. Its purpose is to then call the renderUI functions you have defined
      * on your enemy and player entities within app.js
      */
     function renderEntities() {
         /* Loop through all of the objects within the allEnemies array and call
-         * the render function you have defined.
+         * the renderUI function you have defined.
          */
         allEnemies.forEach(function(enemy) {
-            enemy.render();
+            enemy.renderUI();
         });
 
-        player.render();
+        player.renderUI();
 
     }
 
-    //render start page
+    //renderUI start page
     function renderStart(){
         var charImages = [
             'images/char-boy.png',
@@ -194,8 +194,8 @@ var Engine = (function(global) {
         ctx.fillRect(0,0,canvas.width,canvas.height);
 
 
-        selector.render();
-        selector.update();
+        selector.renderUI();
+        //selector.update();
 
         //console.log(selector.isStart + " "+ selector.url);
         for(let i = 0; i < charImages.length; i++){

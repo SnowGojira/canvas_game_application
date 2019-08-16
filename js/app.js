@@ -16,19 +16,21 @@
 
 /////////////////////////////////////////Class/////////////////////////////////////
 //Selector
+//1. Selector UI logic
+//2. Selector event logic
+
 var Selector = function () {
     this.selectorSprite = 'images/Selector.png';
     this.step = 0;
     this.orient = 0;
     this.x = 101;
-
 };
 
-Selector.prototype.render = function () {
+Selector.prototype.renderUI = function () {
+    //draw canvas
     ctx.drawImage(Resources.get(this.selectorSprite), this.x , 150);
-};
 
-Selector.prototype.update = function () {
+    //update
     if(this.orient != 0){
         this.x = this.x + this.orient * this.step;
         this.step = 0;
@@ -80,7 +82,7 @@ class Enemy {
         this.x > canvas.width? this.x = this.start : this.x = this.x + this.v/(50*dt);
     }
 
-    render(){
+    renderUI(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
         this.width = Resources.get(this.sprite).width;
     }
@@ -111,7 +113,7 @@ var Gem = function(){
     this.x = locX[Math.round(Math.random() * 4)];
 };
 
-Gem.prototype.render = function () {
+Gem.prototype.renderUI = function () {
     ctx.drawImage(Resources.get(this.gem.sprite), this.x, this.y,80,120);
 };
 
@@ -147,7 +149,7 @@ Player.prototype.update = function () {
     }
 };
 
-Player.prototype.render = function () {
+Player.prototype.renderUI = function () {
     //draw the character
     if(this.characterSprite){
         ctx.drawImage(Resources.get(this.characterSprite), this.x, this.y);
@@ -159,7 +161,7 @@ Player.prototype.render = function () {
         ctx.drawImage(Resources.get(this.heartSprite), 500-i*35, 5,32,50);
     }
 
-    //render the counter
+    //renderUI the counter
     drawCount(this.count);
 };
 
@@ -207,7 +209,7 @@ var selector = new Selector(),
     allGems = [];
 
 //initiate a gem object every 2 seconds
-setInterval(function (){
+setInterval(() => {
     var gem = new Gem();
     allGems.push(gem);
 },2000);
@@ -225,7 +227,7 @@ function enemyEntries(level) {
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', (e) => {
     var allowedKeys = {
         37: 'left',
         38: 'up',
